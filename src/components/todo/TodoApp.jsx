@@ -1,10 +1,17 @@
 import { useState } from "react"
 import "./TodoApp.css"
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
 
 export default function TodoApp() {
     return (
         <div className="TodoApp">
-            <LoginComponent></LoginComponent>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<LoginComponent />} ></Route>
+                    <Route path="/login" element={<LoginComponent />} ></Route>
+                    <Route path="/welcome" element={<WelcomeComponent />} ></Route>
+                </Routes>
+            </BrowserRouter>
         </div>
     )
 
@@ -17,6 +24,8 @@ function LoginComponent() {
 
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
     const [showErrorMessage, setShowErrorMessage] = useState(false)
+
+    const navigate = useNavigate(); 
 
 
     function handleUsernameChange(event) {
@@ -33,6 +42,7 @@ function LoginComponent() {
             console.log("Success")
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
+            navigate("/welcome")
         } else {
             console.log("Failed")
             setShowSuccessMessage(false)
@@ -41,31 +51,11 @@ function LoginComponent() {
 
     }
 
-    function SuccessMessageComponent() {
-        if (showSuccessMessage) {
-            return (
-                <div className="SuccessMessage">
-                    Authenticated Successfullty
-                </div>
-            )
-        }
-        else return null;
-    }
-    
-    function ErrorMessageComponent() {
-        if (showErrorMessage) {
-            return (
-                <div className="ErrorMessage">
-                    Authenticated Failed. Please check your credentials.
-                </div>
-            )
-        } else return null;
-    }
-
     return (
         <div className="Login">
-            <SuccessMessageComponent></SuccessMessageComponent>
-            <ErrorMessageComponent></ErrorMessageComponent>
+            {showSuccessMessage && <div className="SuccessMessage">Authenticated Successfully</div>}
+            {showErrorMessage && <div className="ErrorMessage">Authentication Failed.
+                Please check your credentials</div>}
             <div className="LoginForm">
                 <div>
                     <label >Username: </label>
