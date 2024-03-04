@@ -5,8 +5,9 @@ import { BrowserRouter, Link, Route, Routes, useNavigate, useParams } from "reac
 export default function TodoApp() {
     return (
         <div className="TodoApp">
-            <HeaderComponent/>
+
             <BrowserRouter>
+                <HeaderComponent />
                 <Routes>
                     <Route path="/" element={<LoginComponent />} ></Route>
                     <Route path="/login" element={<LoginComponent />} ></Route>
@@ -16,9 +17,9 @@ export default function TodoApp() {
                     <Route path="*" element={<ErrorComponent />} ></Route>
 
                 </Routes>
+                <FooterComponent />
             </BrowserRouter>
 
-            <FooterComponent/>
         </div>
     )
 
@@ -125,10 +126,10 @@ function ListTodosComponennt() {
         { id: 3, decription: 'Learn Docker', done: false, targetDate: targetDate }
     ]
     return (
-        <div className="ErrorComponent">
+        <div className="container">
             <h1>Things You Want To Do!</h1>
             <div>
-                <table>
+                <table className="table">
 
                     <thead>
                         <tr>
@@ -144,10 +145,10 @@ function ListTodosComponennt() {
                             todos.map(
                                 todo => (
                                     <tr key={todo.id}>
-                                        <tr>{todo.id}</tr>
-                                        <tr>{todo.decription}</tr>
-                                        <tr>{todo.done.toString()}</tr>
-                                        <tr>{todo.targetDate.toDateString()}</tr>
+                                        <td>{todo.id}</td>
+                                        <td>{todo.decription}</td>
+                                        <td>{todo.done.toString()}</td>
+                                        <td>{todo.targetDate.toDateString()}</td>
                                     </tr>
                                 )
                             )
@@ -163,17 +164,34 @@ function ListTodosComponennt() {
 
 function HeaderComponent() {
     return (
-        <div className="header">
-            Header <hr />
+        <header className="border-bottom border-light border-5 mb-5 p-2">
+        <div className="container">
+            <div className="row">
+                <nav className="navbar navbar-expand-lg">
+                    <a className="navbar-brand ms-2 fs-2 fw-bold text-black" href="https://github.com/urkejov1996">Portfolio</a>
+                    <div className="collapse navbar-collapse">
+                        <ul className="navbar-nav">
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/in28minutes">Home</Link></li>
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/todos">Todos</Link></li>
+                        </ul>
+                    </div>
+                    <ul className="navbar-nav">
+                        <li className="nav-item fs-5"><Link className="nav-link" to="/login">Login</Link></li>
+                        <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-
+    </header>
     )
 }
 function FooterComponent() {
     return (
-        <div className="footer">
-            <hr />   Footer
-        </div>
+        <footer className="footer">
+            <div className="container">
+                Footer
+            </div>
+        </footer>
 
     )
 }
