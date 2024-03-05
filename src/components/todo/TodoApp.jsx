@@ -16,7 +16,6 @@ function AuthenticatedRoute({ children }) {
     if (authContext.isAuthenticated) {
         return children
     }
-
     return <Navigate to="/" />
 }
 
@@ -47,8 +46,6 @@ export default function TodoApp() {
                                 <LogoutComponent />
                             </AuthenticatedRoute>
                         } ></Route>
-
-
                         <Route path="*" element={<ErrorComponent />} ></Route>
                     </Routes>
                     <FooterComponent />
