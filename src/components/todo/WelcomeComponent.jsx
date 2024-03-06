@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { useState } from "react"
-import { retrieveHelloWorldBean } from "./api/HelloWorldApiService"
+import { retrieveHelloWorldBean, retrieveHelloWorldBeanPathVariable } from "./api/HelloWorldApiService"
 
 export default function WelcomeComponent() {
 
@@ -22,6 +22,13 @@ export default function WelcomeComponent() {
             .then((response) => successfullResponse(response))
             .catch((error) => errorResponse(error))
             .finally(() => console.log('cleanUp for hello-world-bean'))
+    }
+
+    function callHelloWorldBeanPathVariable(){
+        retrieveHelloWorldBeanPathVariable('Uros')
+        .then((response) => successfullResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log('cleanUp for hello-world-bean-path-variable'))
     }
 
     function successfullResponse(response) {
@@ -46,6 +53,9 @@ export default function WelcomeComponent() {
             </div>
             <div>
                 <button className="btn btn-success m-5" onClick={callHelloWorldBean}>Call Hello World Bean REST API</button>
+            </div>
+            <div>
+                <button className="btn btn-success m-5" onClick={callHelloWorldBeanPathVariable}>Call Hello World Bean Path Variable REST API</button>
             </div>
             <div>
                 <div className="text-info">{message}</div>
