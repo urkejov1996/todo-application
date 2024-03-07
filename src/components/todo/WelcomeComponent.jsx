@@ -24,6 +24,8 @@ export default function WelcomeComponent() {
             .finally(() => console.log('cleanUp for hello-world-bean'))
     }
 
+
+    
     function callHelloWorldBeanPathVariable(){
         retrieveHelloWorldBeanPathVariable('Uros')
         .then((response) => successfullResponse(response))
