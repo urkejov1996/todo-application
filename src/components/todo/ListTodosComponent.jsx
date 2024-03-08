@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import { retrieveAllTodosForUsername } from "./api/TodoApiService"
 
 
 
@@ -7,12 +9,29 @@ export default function ListTodosComponennt() {
 
     const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDay())
 
+    const [todos, setTodos] = useState([])
 
-    const todos = [
-        { id: 1, decription: 'Learn AWS', done: false, targetDate: targetDate },
-        { id: 2, decription: 'Learn Full Stack Development', done: false, targetDate: targetDate },
-        { id: 3, decription: 'Learn Docker', done: false, targetDate: targetDate }
-    ]
+
+    // const todos = [
+    //     // { id: 1, description: 'Learn AWS', done: false, targetDate: targetDate },
+    //     // { id: 2, description: 'Learn Full Stack Development', done: false, targetDate: targetDate },
+    //     // { id: 3, description: 'Learn Docker', done: false, targetDate: targetDate }
+    // ]
+
+    useEffect(() => refreshTodos(), [])
+
+
+    function refreshTodos() {
+        retrieveAllTodosForUsername('urke_jov')
+            .then(response => {
+                setTodos(response.data)
+            }
+            )
+            .catch(error => console.log(error))
+    }
+
+
+
     return (
         <div className="container">
             <h1>Things You Want To Do!</h1>
@@ -34,9 +53,10 @@ export default function ListTodosComponennt() {
                                 todo => (
                                     <tr key={todo.id}>
                                         <td>{todo.id}</td>
-                                        <td>{todo.decription}</td>
+                                        <td>{todo.description}</td>
                                         <td>{todo.done.toString()}</td>
-                                        <td>{todo.targetDate.toDateString()}</td>
+                                        {/* <td>{todo.targetDate.toDateString()}</td> */}
+                                        <td>{todo.targetDate.toString()}</td>
                                     </tr>
                                 )
                             )
