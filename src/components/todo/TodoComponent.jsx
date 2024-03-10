@@ -32,7 +32,9 @@ export default function TodoComponent() {
                 () => {
                      <div>
                         Some Content being printed
+                        this should print something don't know why is not working
                         </div>
+                    
                  }
                  
             }
