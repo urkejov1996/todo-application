@@ -1,8 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { retrieveTodoApi, updateTodoApi } from "./api/TodoApiService";
+import {
+  retrieveTodoApi,
+  updateTodoApi,
+  createTodoApi,
+} from "./api/TodoApiService";
 import { useAuth } from "./security/AuthContext";
 import { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import moment from "moment";
 
 export default function TodoComponent() {
   const { id } = useParams();
@@ -18,12 +23,14 @@ export default function TodoComponent() {
   useEffect(() => retrieveTodos(), [id]);
 
   function retrieveTodos() {
-    retrieveTodoApi(username, id)
-      .then((response) => {
-        setDescription(response.data.description);
-        setTargetDate(response.data.targetDate);
-      })
-      .catch((error) => console.log(error));
+    if (id != -1) {
+      retrieveTodoApi(username, id)
+        .then((response) => {
+          setDescription(response.data.description);
+          setTargetDate(response.data.targetDate);
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   function onSubmit(values) {
@@ -36,23 +43,28 @@ export default function TodoComponent() {
       targetDate: values.targetDate,
       done: false,
     };
-    updateTodoApi(username, id, todo)
-    .then((response) => {
-        navigate('/todos')
-      })
-      .catch((error) => console.log(error));
+    if (id == -1) {
+      createTodoApi(username, todo)
+        .then((response) => {
+          navigate("/todos");
+        })
+        .catch((error) => console.log(error));
+    } else {
+      updateTodoApi(username, id, todo)
+        .then((response) => {
+          navigate("/todos");
+        })
+        .catch((error) => console.log(error));
+    }
   }
   function validate(values) {
-    let errors = {
-      //   description: "Enter a valid description",
-      //   targetDate:"Enter a valid target date"
-    };
+    let errors = {};
 
     if (values.description.length < 5) {
       errors.description = "Enter minimum 5 characters.";
     }
-    if (values.targetDate == null) {
-      errors.description = "Enter a target date..";
+    if (values.targetDate == null || values.targetDate == "" || !moment(values.targetDate).isValid()) {
+      errors.targetDate = "Enter a target date..";
     }
     console.log(values);
     return errors;
