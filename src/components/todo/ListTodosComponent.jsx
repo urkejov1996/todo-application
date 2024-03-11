@@ -36,7 +36,7 @@ export default function ListTodosComponent() {
   }
 
 
-  
+
   function deleteTodo(id) {
     console.log("clicked " + id);
     deleteTodoApi(username, id)
@@ -57,7 +57,7 @@ export default function ListTodosComponent() {
       <h1>Things You Want To Do!</h1>
       {message && <div className="alert alert-warning">{message}</div>}
       <div>
-        <table className="table">
+        <table className="table m-5">
           <thead>
             <tr>
               <th>Description</th>
