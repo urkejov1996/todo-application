@@ -1,17 +1,26 @@
-import axios from "axios"
+import axios from "axios";
 
 // export function retrieveHelloWorldBean() {
 //     return axios.get('http://localhost:8080/hello-world-bean')
 // }
 
-const apiClient = axios.create(
-    {
-        baseURL: 'http://localhost:8080'
-    }
-)
+const apiClient = axios.create({
+  baseURL: "http://localhost:8080",
+});
 
 // same as function above just this is arros function
-export const retrieveHelloWorldBean = () => apiClient.get('/hello-world-bean')
+export const retrieveHelloWorldBean = () => apiClient.get("/hello-world-bean");
 
+export const retrieveHelloWorldBeanPathVariable = (username, token) =>
+  apiClient.get(`/hello-world/path-variable/${username}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
 
-export const retrieveHelloWorldBeanPathVariable = (username) => apiClient.get(`/hello-world/path-variable/${username}`)
+export const executeBasicAuthenticationService = (token) =>
+  apiClient.get(`/basicauth`, {
+    headers: {
+      Authorization: token,
+    },
+  });
